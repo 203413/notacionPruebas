@@ -1,43 +1,46 @@
 import React from 'react';
-import axios from 'axios';
+import { NavLink } from "react-router-dom";
 import './../../global/assets/css/styles.css';
+import validate_logo from './assets/imgs/validate.png'
+import quiz_logo from './assets/imgs/quiz.png'
 
 function Notacion() {
-  const comprobar = () => {
-    var datos = document.getElementById('cinta').value
-    var postData = {
-      Conjunto: datos,
-    }
-    axios
-      .post("http://127.0.0.1:8000/api/notacion", postData, {
-        headers: { 'Content-Type': 'application/json', },
-      })
-      .then(response => {
-        console.log('si se puo')
-        console.log(response.data.status)
-        alert(response.data.status)
-      }).catch(
-        (error) => {
-          console.log(error.response.data);
-          alert('Hacen falta datos');
-        }
-
-      )
-  }
-
   return (
-    <div className='container m-5'>
-      <h1>Notacion de conjuntos</h1>
-      <div className="mb-3">
-        <label className="form-label text-bold">Escriba un conjunto</label>
-        <input type="text" className="form-control rounded-3 text-regular" id="cinta"  />
-        <p className='text-m-22 txt-error' id="msg-cinta2"></p>
-      </div>
+    <>
+      <div className='container m-5'>
 
-      <div className='col div-center'>
-        <button className="btn btn-primary btn-submit text-bold mb-3 rounded-3" onClick={comprobar}>Calcular</button>
+        <h1 className='fs-3 text-bold mb-3'>Notación</h1>
+        <h2 className='text-m-23 text-regular text-center mb-4'>Selecciona una opción:</h2>
+
+        <div className="row row-cols-md-4 g-4 justify-content-center">
+
+          <div className="col">
+            <div className="card h-100" style={{ width: 16 + 'rem' }}>
+              <img src={quiz_logo} className="card-img-top" alt="image" />
+              <div className="card-body align-items-center text-center">
+                <h5 className="card-title text-m-23 text-bold">Quiz</h5>
+                <p className="card-text">En este apartado se practica mediante un examen la notación de conjuntos.</p>
+                <NavLink to="/notacion/quiz" className="btn btn-primary btn-submit text-bold mb-1 rounded-3">Iniciar</NavLink>
+              </div>
+            </div>
+          </div>
+
+          <div className="col">
+            <div className="card h-100" style={{ width: 16 + 'rem' }}>
+              <img src={validate_logo} className="card-img-top" alt="image" />
+              <div className="card-body align-items-center text-center">
+                <h5 className="card-title text-m-23 text-bold">Validar</h5>
+                <p className="card-text">En este apartado se valida la notación de conjuntos.</p>
+                <NavLink to="/notacion/validar" className="btn btn-primary btn-submit text-bold mb-1 mt-5 rounded-3">Iniciar</NavLink>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+
       </div>
-    </div>
+    </>
+
   );
 }
 
