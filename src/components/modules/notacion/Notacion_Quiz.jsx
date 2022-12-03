@@ -128,7 +128,7 @@ class Notacion_Quiz extends Component {
 
                 <div class="card text-bg-secondary text-center mb-4">
                     <div class="card-header">
-                        Pregunta 1
+                        Pregunta 1 - PENDEINTE
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">Indique la respuesta correcta</h5>
@@ -186,7 +186,7 @@ class Notacion_Quiz extends Component {
 
                 <div class="card text-bg-secondary text-center mb-4">
                     <div class="card-header">
-                        Pregunta 3
+                        Pregunta 3 - PENDEINTE
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">Indique la respuesta correcta</h5>
@@ -243,7 +243,7 @@ class Notacion_Quiz extends Component {
 
                 <div class="card text-bg-secondary text-center mb-4">
                     <div class="card-header">
-                        Pregunta 5
+                        Pregunta 5 - PENDEINTE
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">Indique la respuesta correcta</h5>
