@@ -7,7 +7,7 @@ import quiz_logo from './assets/imgs/quiz.png'
 function Notacion() {
   return (
     <>
-      <div className='container m-5'>
+      <div className='container mt-3' style={{ width: 'auto' }}>
 
         <h1 className='fs-3 text-bold mb-3'>Notación</h1>
         <h2 className='text-m-23 text-regular text-center mb-4'>Selecciona una opción:</h2>
