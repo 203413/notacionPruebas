@@ -45,54 +45,136 @@ class Notacion_Quiz extends Component {
         }
     }
 
-    get_data = () => {
-        let aciertos = 0
-        let respuesta1 = document.getElementById('pregunta1').value
-        let respuesta2 = document.querySelector('input[name="flexRadioDefault1"]:checked').value
-        let respuesta3 = document.getElementById('pregunta3').value
-        let respuesta4 = document.querySelector('input[name="flexRadioDefault2"]:checked').value
-        let respuesta5 = document.getElementById('pregunta5').value
+    get_data = async () => {
+        let data
+        const request_options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
 
-        if (respuesta1 === null || respuesta1 === undefined || respuesta1 === "" ||
+        let aciertos = 0
+
+        let respuesta0_aux = document.getElementById('pregunta0').value
+        let respuesta0 = respuesta0_aux.split(' ').join('')
+
+        let respuesta1_aux = document.getElementById('pregunta1').value
+        let respuesta1 = respuesta1_aux.split(' ').join('')
+
+        let respuesta2 = document.querySelector('input[name="flexRadioDefault1"]:checked').value
+
+        let respuesta3_aux = document.getElementById('pregunta3').value
+        let respuesta3 = respuesta3_aux.split(' ').join('')
+
+        let respuesta4 = document.querySelector('input[name="flexRadioDefault2"]:checked').value
+
+        let respuesta5_aux = document.getElementById('pregunta5').value
+        let respuesta5 = respuesta5_aux.split(' ').join('')
+
+        if (respuesta0 === null || respuesta0 === undefined || respuesta0 === "" ||
+            respuesta1 === null || respuesta1 === undefined || respuesta1 === "" ||
             respuesta3 === null || respuesta3 === undefined || respuesta3 === "" ||
             respuesta5 === null || respuesta5 === undefined || respuesta5 === "") {
             alert("No puedes dejar campos vacios")
             return
         }
 
-        if (respuesta1 === "Si") {
+        // PREGUNTA 1
+        var post_data = {
+            Conjunto: respuesta0
+        }
+
+        await axios
+            .post("http://127.0.0.1:8000/api/notacion", post_data, request_options)
+            .then((response) => {
+                data = response.data.status
+            })
+            .catch((error) => {
+                console.log(error)
+            });
+
+        if (data === "Valido") {
+            document.getElementById('p0c').style.display = "block"
+            aciertos++
+        } else {
+            document.getElementById('p0i').style.display = "block"
+        }
+
+        // PREGUNTA 2
+        var post_data = {
+            Conjunto: respuesta1
+        }
+
+        await axios
+            .post("http://127.0.0.1:8000/api/notacion", post_data, request_options)
+            .then((response) => {
+                data = response.data.Cardinalidad
+            })
+            .catch((error) => {
+                console.log(error)
+            });
+
+        if (data === this.state.preguntas.p1) {
             document.getElementById('p1c').style.display = "block"
             aciertos++
         } else {
             document.getElementById('p1i').style.display = "block"
         }
 
+        // PREGUNTA 3
+
         if (respuesta2 === this.state.p2[this.state.p2[3] - 1]) {
-            document.getElementById('p2i').style.display = "none"
             document.getElementById('p2c').style.display = "block"
             aciertos++
         } else {
-            document.getElementById('p2c').style.display = "none"
             document.getElementById('p2i').style.display = "block"
         }
 
-        if (respuesta3 === "Si") {
+        // PREGUNTA 4
+        var post_data = {
+            Conjunto: respuesta3
+        }
+
+        await axios
+            .post("http://127.0.0.1:8000/api/notacion", post_data, request_options)
+            .then((response) => {
+                data = response.data.Cardinalidad
+            })
+            .catch((error) => {
+                console.log(error)
+            });
+
+        if (data === this.state.preguntas.p3) {
             document.getElementById('p3c').style.display = "block"
             aciertos++
         } else {
             document.getElementById('p3i').style.display = "block"
         }
 
+        // PREGUNTA 5
         if (respuesta4 === this.state.p4[this.state.p4[3] - 1]) {
-            document.getElementById('p4i').style.display = "none"
             document.getElementById('p4c').style.display = "block"
             aciertos++
         } else {
-            document.getElementById('p4c').style.display = "none"
             document.getElementById('p4i').style.display = "block"
         }
 
-        if (respuesta5 === "Si") {
+        // PREGUNTA 6
+        var post_data = {
+            Conjunto: respuesta5
+        }
+
+        await axios
+            .post("http://127.0.0.1:8000/api/notacion", post_data, request_options)
+            .then((response) => {
+                data = response.data.Cardinalidad
+            })
+            .catch((error) => {
+                console.log(error)
+            });
+
+        if (data === this.state.preguntas.p5) {
             document.getElementById('p5c').style.display = "block"
             aciertos++
         } else {
@@ -100,9 +182,8 @@ class Notacion_Quiz extends Component {
         }
 
         document.getElementById('reinicio').style.display = "block"
-
         document.getElementById('enviar').style.display = "none"
-        let calif = (aciertos / 5) * 100
+        let calif = (aciertos / 6) * 100
         this.setState({ aciertos: aciertos, calif: calif })
 
         document.getElementById('resumen').style.display = "block"
@@ -128,11 +209,28 @@ class Notacion_Quiz extends Component {
 
                 <div class="card text-bg-secondary text-center mb-4">
                     <div class="card-header">
-                        Pregunta 1 - PENDEINTE
+                        Pregunta 1
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">Indique la respuesta correcta</h5>
-                        <p class="card-text">Escriba un conjunto con cardinalidad X. Tome en cuenta la notación de conjuntos.</p>
+                        <p class="card-text">Escriba un conjunto valido.</p>
+                        <input type="text" className="form-control mb-3" id="pregunta0" placeholder="Escriba su respuesta aquí" />
+                    </div>
+                </div>
+                <div class="alert alert-success" style={{ display: 'none' }} role="alert" id="p0c">
+                    ✔ Respuesta correcta
+                </div>
+                <div class="alert alert-danger" style={{ display: 'none' }} role="alert" id="p0i">
+                    X Respuesta incorrecta
+                </div>
+
+                <div class="card text-bg-secondary text-center mb-4">
+                    <div class="card-header">
+                        Pregunta 2
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Indique la respuesta correcta</h5>
+                        <p class="card-text">Escriba un conjunto con cardinalidad {this.state.preguntas.p1}. Tome en cuenta la notación de conjuntos.</p>
                         <input type="text" className="form-control mb-3" id="pregunta1" placeholder="Escriba su respuesta aquí" />
                     </div>
                 </div>
@@ -146,7 +244,7 @@ class Notacion_Quiz extends Component {
 
                 <div class="card text-bg-secondary text-center mb-4">
                     <div class="card-header">
-                        Pregunta 2
+                        Pregunta 3
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">Seleccione la respuesta correcta</h5>
@@ -186,11 +284,11 @@ class Notacion_Quiz extends Component {
 
                 <div class="card text-bg-secondary text-center mb-4">
                     <div class="card-header">
-                        Pregunta 3 - PENDEINTE
+                        Pregunta 4
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">Indique la respuesta correcta</h5>
-                        <p class="card-text">Escriba un conjunto con cardinalidad X. Tome en cuenta la notación de conjuntos.</p>
+                        <p class="card-text">Escriba un conjunto con cardinalidad {this.state.preguntas.p3}. Tome en cuenta la notación de conjuntos.</p>
                         <input type="text" className="form-control mb-3" id="pregunta3" placeholder="Escriba su respuesta aquí" />
                     </div>
                 </div>
@@ -203,7 +301,7 @@ class Notacion_Quiz extends Component {
 
                 <div class="card text-bg-secondary text-center mb-4">
                     <div class="card-header">
-                        Pregunta 4
+                        Pregunta 5
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">Seleccione la respuesta correcta</h5>
@@ -243,11 +341,11 @@ class Notacion_Quiz extends Component {
 
                 <div class="card text-bg-secondary text-center mb-4">
                     <div class="card-header">
-                        Pregunta 5 - PENDEINTE
+                        Pregunta 6
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">Indique la respuesta correcta</h5>
-                        <p class="card-text">Escriba un conjunto con cardinalidad X. Tome en cuenta la notación de conjuntos.</p>
+                        <p class="card-text">Escriba un conjunto con cardinalidad {this.state.preguntas.p5}. Tome en cuenta la notación de conjuntos.</p>
                         <input type="text" className="form-control mb-3" id="pregunta5" placeholder="Escriba su respuesta aquí" />
                     </div>
                 </div>
@@ -262,11 +360,11 @@ class Notacion_Quiz extends Component {
 
                 <div class="alert alert-primary mt-5" style={{ display: 'none' }} role="alert" id="resumen">
                     <h4 class="alert-heading">Resumen del Quiz!</h4>
-                    <hr/>
-                        <p class="mb-0">Aciertos: {this.state.aciertos}</p>
-                        <p class="mb-2">Calificación final: {this.state.calif}</p>
+                    <hr />
+                    <p class="mb-0">Aciertos: {this.state.aciertos}</p>
+                    <p class="mb-2">Calificación final: {this.state.calif}</p>
 
-                        <button type="button" class="btn btn-danger" id='reinicio' style={{ display: 'none' }} onClick={() => window.location.reload()}>Cargar otro Quiz</button>
+                    <button type="button" class="btn btn-danger" id='reinicio' style={{ display: 'none' }} onClick={() => window.location.reload()}>Cargar otro Quiz</button>
                 </div>
 
             </div>

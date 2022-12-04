@@ -6,23 +6,9 @@ import './../../global/assets/css/styles.css';
 
 function Notacion_Validar() {
 
-    const validate = () => {
-        const request_options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        };
-
-        let datos = document.getElementById('')
-
-        var post_data = {
-            conjunto: document.getElementById('user').value,
-        }
-    }
-
     const get_data = () => {
-        let answer = document.getElementById('notacion').value
+        let answer_aux = document.getElementById('notacion').value
+        let answer = answer_aux.split(' ').join('')
 
         const request_options = {
             method: 'POST',
@@ -74,7 +60,7 @@ function Notacion_Validar() {
                     </div>
                     <div class="card-body">
                         <h5 class="card-title fw-bold">Validar Conjunto</h5>
-                        <p class="card-text">Se pueden validar las siguientes características: Notación, Listas ordenadas, conjuntos vacíos, conjuntos extensivos.</p>
+                        <p class="card-text">Se puede validar la notación de conjuntos.</p>
                         <div className="input-group mb-2">
                             <div className="form-floating">
                                 <input type="text" className="form-control" id="notacion" placeholder="Escriba aquí" />
